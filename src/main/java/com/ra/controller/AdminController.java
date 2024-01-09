@@ -11,6 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AdminController {
     @GetMapping("/")
     public ResponseEntity<?> getAdmin(){
-        return new ResponseEntity<>( "Welcome Home! Admin ^.^",HttpStatus.OK);
+        return new ResponseEntity<>( "您好! Admin",HttpStatus.OK);
     }
 }

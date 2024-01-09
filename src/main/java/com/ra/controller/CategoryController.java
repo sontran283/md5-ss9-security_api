@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/admin")
 public class CategoryController {
-    @GetMapping()
-    public ResponseEntity<?> getCategory(){
-        return new ResponseEntity<>("abc", HttpStatus.OK);
+    @GetMapping("/category")
+    public ResponseEntity<?> getCategory() {
+        return new ResponseEntity<>("hello category", HttpStatus.OK);
     }
 }

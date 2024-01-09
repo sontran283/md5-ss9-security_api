@@ -41,7 +41,7 @@ public class JWTTokenFilter extends OncePerRequestFilter {
                 }
             }
         }catch (Exception e){
-            logger.error("UnAuthentication s {}",e.getMessage());
+            logger.error("UnAuthentications {}",e.getMessage());
         }
         filterChain.doFilter(request,response);
     }

@@ -9,5 +9,4 @@ public class Md5Ss9SecurityApiApplication {
     public static void main(String[] args) {
         SpringApplication.run(Md5Ss9SecurityApiApplication.class, args);
     }
-
 }

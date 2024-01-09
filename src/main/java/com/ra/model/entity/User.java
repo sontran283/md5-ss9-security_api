@@ -19,6 +19,7 @@ public class User {
     @Column(unique = true)
     private String userName;
     private String password;
+    @Column(columnDefinition = "boolean default true")
     private Boolean status;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

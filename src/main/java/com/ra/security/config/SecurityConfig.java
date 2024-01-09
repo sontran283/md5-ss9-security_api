@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -20,6 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
     @Autowired
     private UserDetailService userDetailService;
@@ -33,17 +35,20 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity.
-                csrf(AbstractHttpConfigurer::disable).authenticationProvider(authenticationProvider()).authorizeHttpRequests((auth) ->
-                        auth.requestMatchers("/auth/**").permitAll()
+        return httpSecurity
+                .csrf(AbstractHttpConfigurer::disable)
+                .authenticationProvider(authenticationProvider())
+                .authorizeHttpRequests(
+                        (auth) -> auth
+                                .requestMatchers("/auth/**", "/uploads/**","/products/**","/*")
+                                .permitAll()
                                 .requestMatchers("/admin/**").hasAuthority("ADMIN")
                                 .anyRequest().authenticated()
                 ).exceptionHandling(
                         (auth) -> auth
                                 .authenticationEntryPoint(jwtEntryPoint)
                                 .accessDeniedHandler(accessDenied)
-                ).addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
+                ).addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class).build();
     }
 
     @Bean

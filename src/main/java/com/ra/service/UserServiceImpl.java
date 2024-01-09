@@ -13,7 +13,6 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,15 +35,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User register(User user) {
-//        ma hoa mat khau
+        // ma hoa mat khau
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        role
+        // role
         Set<Role> roles = new HashSet<>();
-//        register cua user thi coi no la USER
+        // register cua user thi coi no la USER
         if (user.getRoles() == null || user.getRoles().isEmpty()) {
             roles.add(roleService.findByRoleName("USER"));
         } else {
-//        tao tai khoan va phan quyen thi phai co quyen ADMIN
+            // tao tai khoan va phan quyen thi phai co quyen ADMIN
             user.getRoles().forEach(role -> roles.add(roleService.findByRoleName(role.getName())));
         }
         User newUser = new User();
